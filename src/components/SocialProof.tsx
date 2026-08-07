@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
-import { Star, TrendingUp, Users, Award } from 'lucide-react';
+import { Star, TrendingUp, Award, ShieldCheck } from 'lucide-react';
 
 export default function SocialProof() {
   const stats = [
     { icon: Star, value: '4.8/5', label: 'Student Satisfaction', color: 'text-yellow-600' },
     { icon: Award, value: 'NAAC A', label: 'Accreditation (3.01 CGPA)', color: 'text-purple-600' },
     { icon: TrendingUp, value: '95%', label: 'Placement Success', color: 'text-green-600' },
-    { icon: Users, value: '50+', label: 'Global Partners', color: 'text-blue-600' },
+    { icon: ShieldCheck, value: 'ISO', label: '9001:2015 Certified', color: 'text-blue-600' },
   ];
 
   const logos = [
