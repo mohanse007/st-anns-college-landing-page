@@ -71,7 +71,7 @@ export default function Hero() {
                   Empowering Women Since 1977
                 </span>
               </motion.div>
- 
+
               <h1 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-bold leading-tight">
                 <span className="bg-gradient-to-r from-gray-900 via-purple-900 to-gray-900 bg-clip-text text-transparent">
                   Shape Your
@@ -82,7 +82,7 @@ export default function Hero() {
                 </span>
               </h1>
             </motion.div>
- 
+
             <motion.p
               className="text-base sm:text-lg text-gray-600 max-w-xl mx-auto lg:mx-0 leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
@@ -93,7 +93,7 @@ export default function Hero() {
               exceptional mentorship, and limitless opportunities for personal and
               professional growth.
             </motion.p>
- 
+
             <motion.div
               className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start"
               initial={{ opacity: 0, y: 20 }}
@@ -112,7 +112,7 @@ export default function Hero() {
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity" />
               </motion.a>
- 
+
               <motion.a
                 href="#programs"
                 className="px-6 py-3 bg-white text-gray-900 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all border-2 border-gray-200 hover:border-purple-300 text-sm"
@@ -122,7 +122,7 @@ export default function Hero() {
                 Explore Programs
               </motion.a>
             </motion.div>
- 
+
             {/* Stats */}
             <motion.div
               className="grid grid-cols-3 gap-4 pt-6"
@@ -151,7 +151,7 @@ export default function Hero() {
               ))}
             </motion.div>
           </div>
- 
+
           {/* Right Visual */}
           <motion.div
             className="relative w-full max-w-[360px] mx-auto lg:ml-auto lg:mr-0"
@@ -170,7 +170,7 @@ export default function Hero() {
                     St.Ann's
                   </div>
                 </div>
- 
+
                 {/* Floating Accent Cards */}
                 <motion.div
                   className="absolute -top-4 -right-4 bg-white rounded-2xl p-3 shadow-xl"
@@ -185,7 +185,7 @@ export default function Hero() {
                 >
                   <div className="text-2xl">🎓</div>
                 </motion.div>
- 
+
                 <motion.div
                   className="absolute -bottom-4 -left-4 bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl p-3 shadow-xl"
                   animate={{
@@ -202,7 +202,7 @@ export default function Hero() {
                   </div>
                 </motion.div>
               </motion.div>
- 
+
               {/* Decorative Elements */}
               <div className="absolute -z-10 inset-0 bg-gradient-to-br from-purple-200 to-pink-200 rounded-3xl blur-3xl opacity-30" />
             </div>
@@ -219,21 +219,10 @@ export default function Hero() {
         transition={{
           duration: 1.5,
           repeat: Infinity,
-          ease: 'easeInOut',
         }}
       >
-        <div className="w-6 h-10 border-2 border-purple-300 rounded-full flex items-start justify-center p-2">
-          <motion.div
-            className="w-1.5 h-1.5 bg-purple-600 rounded-full"
-            animate={{
-              y: [0, 12, 0],
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
+        <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center p-1">
+          <motion.div className="w-1.5 h-2 bg-gray-450 rounded-full" />
         </div>
       </motion.div>
     </section>

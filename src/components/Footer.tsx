@@ -37,32 +37,36 @@ const YoutubeIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export default function Footer() {
+interface FooterProps {
+  onPageChange: (page: string) => void;
+}
+
+export default function Footer({ onPageChange }: FooterProps) {
   const quickLinks = [
-    { name: 'About Us', href: '#about' },
-    { name: 'Programs', href: '#programs' },
-    { name: 'Admissions', href: '#admissions' },
-    { name: 'Campus Life', href: '#campus' },
-    { name: 'Placements', href: '#placements' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'About Us', page: 'about' },
+    { name: 'Programs Offered', page: 'academics' },
+    { name: 'Admissions', page: 'home', scrollId: 'admissions' },
+    { name: 'Campus Life', page: 'activities' },
+    { name: 'Placements', page: 'home', scrollId: 'placements' },
+    { name: 'Contact', page: 'home', scrollId: 'contact' },
   ];
 
   const resources = [
-    { name: 'Student Portal', href: '#' },
-    { name: 'Faculty Portal', href: '#' },
-    { name: 'Library', href: '#' },
-    { name: 'E-Learning', href: '#' },
-    { name: 'Research', href: '#' },
-    { name: 'Alumni', href: '#' },
+    { name: 'Student Portal', href: 'https://saca.linways.com/' },
+    { name: 'Faculty Portal', href: 'https://saca.linways.com/' },
+    { name: 'NAAC Documents', page: 'naac' },
+    { name: 'IQAC Portal', page: 'iqac' },
+    { name: 'RTI Disclosure', page: 'rti' },
+    { name: 'Academic Journal', page: 'research' }
   ];
 
   const programs = [
-    { name: 'B.Sc (Honours)', href: '#programs' },
-    { name: 'B.Com (Honours)', href: '#programs' },
-    { name: 'BBA (Honours)', href: '#programs' },
-    { name: 'BCA (Honours)', href: '#programs' },
-    { name: 'B.A (Honours)', href: '#programs' },
-    { name: 'Postgraduate (PG) Programs', href: '#programs' },
+    { name: 'B.Sc (Honours)', page: 'academics' },
+    { name: 'B.Com (Honours)', page: 'academics' },
+    { name: 'BBA (Honours)', page: 'academics' },
+    { name: 'BCA (Honours)', page: 'academics' },
+    { name: 'B.A (Honours)', page: 'academics' },
+    { name: 'Postgraduate (PG) Programs', page: 'academics' },
   ];
 
   const socialLinks = [
@@ -72,6 +76,24 @@ export default function Footer() {
     { icon: LinkedinIcon, href: '#', label: 'LinkedIn' },
     { icon: YoutubeIcon, href: '#', label: 'YouTube' },
   ];
+
+  const handleLinkClick = (link: { page?: string; scrollId?: string; href?: string }, event: React.MouseEvent) => {
+    if (link.href) {
+      return;
+    }
+    event.preventDefault();
+    if (link.page) {
+      onPageChange(link.page);
+      if (link.scrollId) {
+        setTimeout(() => {
+          const el = document.getElementById(link.scrollId!);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 150);
+      }
+    }
+  };
 
   return (
     <footer id="contact" className="bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white relative overflow-hidden">
@@ -146,7 +168,8 @@ export default function Footer() {
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   <a
-                    href={link.href}
+                    href={link.href || '#'}
+                    onClick={(e) => handleLinkClick(link, e)}
                     className="text-gray-300 hover:text-white transition-colors inline-flex items-center gap-2 group"
                   >
                     <span className="w-0 h-0.5 bg-purple-400 group-hover:w-4 transition-all" />
@@ -169,7 +192,8 @@ export default function Footer() {
               {programs.map((link) => (
                 <li key={link.name}>
                   <a
-                    href={link.href}
+                    href="#"
+                    onClick={(e) => handleLinkClick(link, e)}
                     className="text-gray-300 hover:text-white transition-colors inline-flex items-center gap-2 group"
                   >
                     <span className="w-0 h-0.5 bg-purple-400 group-hover:w-4 transition-all" />
@@ -192,7 +216,10 @@ export default function Footer() {
               {resources.map((link) => (
                 <li key={link.name}>
                   <a
-                    href={link.href}
+                    href={link.href || '#'}
+                    onClick={(e) => handleLinkClick(link, e)}
+                    target={link.href?.startsWith('http') ? '_blank' : undefined}
+                    rel={link.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
                     className="text-gray-300 hover:text-white transition-colors inline-flex items-center gap-2 group"
                   >
                     <span className="w-0 h-0.5 bg-purple-400 group-hover:w-4 transition-all" />

@@ -13,10 +13,22 @@ import FAQ from './components/FAQ';
 import CTA from './components/CTA';
 import Footer from './components/Footer';
 import LoadingScreen from './components/LoadingScreen';
+import Ticker from './components/Ticker';
+
+// Subpages
+import AboutPage from './components/AboutPage';
+import AcademicsPage from './components/AcademicsPage';
+import NaacPage from './components/NaacPage';
+import IqacPage from './components/IqacPage';
+import RtiPage from './components/RtiPage';
+import ActivitiesPage from './components/ActivitiesPage';
+import CommitteesPage from './components/CommitteesPage';
+import ResearchPage from './components/ResearchPage';
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState<string>('home');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,6 +48,12 @@ export default function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Scroll to top on page change
+  const handlePageChange = (page: string) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'instant' as any });
+  };
+
   return (
     <>
       <AnimatePresence>
@@ -43,17 +61,39 @@ export default function App() {
       </AnimatePresence>
       
       <div className="relative min-h-screen bg-white">
-        <Navbar scrolled={scrolled} />
-        <Hero />
-        <SocialProof />
-        <Features />
-        <Programs />
-        <Benefits />
-        <Testimonials />
-        <Admissions />
-        <FAQ />
-        <CTA />
-        <Footer />
+        <Navbar scrolled={scrolled} currentPage={currentPage} onPageChange={handlePageChange} />
+        
+        {currentPage === 'home' ? (
+          <>
+            <Hero />
+            <SocialProof />
+            <Features />
+            <Programs />
+            <Benefits />
+            <Testimonials />
+            <Admissions />
+            <FAQ />
+            <CTA />
+          </>
+        ) : currentPage === 'about' ? (
+          <AboutPage />
+        ) : currentPage === 'academics' ? (
+          <AcademicsPage />
+        ) : currentPage === 'naac' ? (
+          <NaacPage />
+        ) : currentPage === 'iqac' ? (
+          <IqacPage />
+        ) : currentPage === 'rti' ? (
+          <RtiPage />
+        ) : currentPage === 'activities' ? (
+          <ActivitiesPage />
+        ) : currentPage === 'committees' ? (
+          <CommitteesPage />
+        ) : currentPage === 'research' ? (
+          <ResearchPage />
+        ) : null}
+
+        <Footer onPageChange={handlePageChange} />
 
         {/* Back to Top Floating Button */}
         <AnimatePresence>

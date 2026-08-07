@@ -2,60 +2,110 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import logo from '../assets/logo.jpg';
+import Ticker from './Ticker';
 
 interface NavbarProps {
   scrolled: boolean;
+  currentPage: string;
+  onPageChange: (page: string) => void;
 }
 
-export default function Navbar({ scrolled }: NavbarProps) {
+export default function Navbar({ scrolled, currentPage, onPageChange }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileDropdowns, setMobileDropdowns] = useState<Record<string, boolean>>({});
 
   const navLinks = [
-    { name: 'Home', href: '#' },
-    { name: 'About Us', href: '#features' },
+    { name: 'Home', page: 'home', scrollId: 'hero' },
     { 
-      name: 'Administration', 
-      href: '#', 
+      name: 'About Us', 
+      page: 'about',
       dropdown: [
-        { name: 'Governing Body', href: '#' },
-        { name: 'Principal Office', href: '#' },
-        { name: 'Administrative Staff', href: '#' }
+        { name: 'Overview & Admin', page: 'about' },
+        { name: 'Vision & Mission', page: 'about' },
+        { name: 'Our Inspiration', page: 'about' },
+        { name: 'Policies & Codes', page: 'about' }
       ] 
     },
     { 
       name: 'Academics', 
-      href: '#programs', 
+      page: 'academics',
       dropdown: [
-        { name: 'Undergraduate (UG)', href: '#programs' },
-        { name: 'Postgraduate (PG)', href: '#programs' },
-        { name: 'Admissions 2026-27', href: '#admissions' }
-      ] 
+        { name: 'Programs & Fees', page: 'academics' },
+        { name: 'Our Departments', page: 'academics' },
+        { name: 'Academic Calendars', page: 'academics' },
+        { name: 'Exams & Results', page: 'academics' }
+      ]
     },
-    { name: 'RTI', href: '#' },
+    { 
+      name: 'NAAC', 
+      page: 'naac',
+      dropdown: [
+        { name: 'Accreditation Cert', page: 'naac' },
+        { name: 'AQAR Reports', page: 'naac' },
+        { name: 'SSR Reports', page: 'naac' },
+        { name: 'Evaluative Criteria', page: 'naac' }
+      ]
+    },
+    { name: 'IQAC', page: 'iqac' },
     { 
       name: 'Committees', 
-      href: '#', 
+      page: 'committees',
       dropdown: [
-        { name: 'Anti-Ragging Committee', href: '#' },
-        { name: 'Grievance Cell', href: '#' },
-        { name: 'IQAC Cell', href: '#' }
-      ] 
+        { name: 'Welfare Committees', page: 'committees' },
+        { name: 'Grievance & Redressal', page: 'committees' },
+        { name: 'Anti-Ragging policies', page: 'committees' }
+      ]
     },
-    { name: 'NAAC', href: '#faq' },
-    { name: 'AICTE', href: '#' },
-    { name: 'IQAC', href: '#' },
-    { name: 'Contact Us', href: '#contact' },
+    { 
+      name: 'Activities', 
+      page: 'activities',
+      dropdown: [
+        { name: 'NCC Unit', page: 'activities' },
+        { name: 'NSS Service', page: 'activities' },
+        { name: 'Outreach & Sports', page: 'activities' }
+      ]
+    },
+    { name: 'RTI', page: 'rti' },
+    { 
+      name: 'Research & Journal', 
+      page: 'research',
+      dropdown: [
+        { name: 'Academic Journal', page: 'research' },
+        { name: 'College Newsletters', page: 'research' }
+      ]
+    },
+    { name: 'Contact Us', page: 'home', scrollId: 'contact' },
     { 
       name: 'Login', 
-      href: '#', 
       dropdown: [
         { name: 'UG & PG Student Login', href: 'https://saca.linways.com/' },
         { name: 'Staff Login', href: 'https://saca.linways.com/' }
       ] 
     },
   ];
+
+  const handleLinkClick = (link: { page?: string; scrollId?: string; href?: string }, event: React.MouseEvent) => {
+    if (link.href) {
+      // External link triggers default action (target _blank if configured)
+      return;
+    }
+
+    event.preventDefault();
+
+    if (link.page) {
+      onPageChange(link.page);
+      
+      if (link.scrollId) {
+        setTimeout(() => {
+          const el = document.getElementById(link.scrollId!);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 150);
+      }
+    }
+  };
 
   return (
     <motion.nav
@@ -73,6 +123,7 @@ export default function Navbar({ scrolled }: NavbarProps) {
           {/* Logo */}
           <motion.a
             href="#"
+            onClick={(e) => handleLinkClick({ page: 'home', scrollId: 'hero' }, e)}
             className="flex items-center gap-3 group"
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.99 }}
@@ -101,6 +152,7 @@ export default function Navbar({ scrolled }: NavbarProps) {
             <span className="text-gray-300">|</span>
             <motion.a
               href="#admissions"
+              onClick={(e) => handleLinkClick({ page: 'home', scrollId: 'admissions' }, e)}
               className="relative px-5 py-1.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full text-xs font-semibold shadow-md hover:shadow-lg transition-all overflow-hidden group"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -131,8 +183,13 @@ export default function Navbar({ scrolled }: NavbarProps) {
                 onMouseLeave={() => setActiveDropdown(null)}
               >
                 <motion.a
-                  href={link.href}
-                  className="px-3.5 py-1.5 text-xs text-gray-700 hover:text-purple-600 font-semibold transition-colors rounded-lg hover:bg-purple-50/50 flex items-center gap-1 group whitespace-nowrap"
+                  href={link.href || '#'}
+                  onClick={(e) => handleLinkClick(link, e)}
+                  className={`px-3.5 py-1.5 text-xs font-semibold transition-colors rounded-lg flex items-center gap-1 group whitespace-nowrap ${
+                    currentPage === link.page
+                      ? 'text-purple-600 bg-purple-50/50 font-bold'
+                      : 'text-gray-700 hover:text-purple-600 hover:bg-purple-50/50'
+                  }`}
                   whileHover={{ y: -1 }}
                 >
                   {link.name}
@@ -152,9 +209,10 @@ export default function Navbar({ scrolled }: NavbarProps) {
                       {link.dropdown.map((sub) => (
                         <a
                           key={sub.name}
-                          href={sub.href}
-                          target={sub.href.startsWith('http') ? '_blank' : undefined}
-                          rel={sub.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                          href={sub.href || '#'}
+                          onClick={(e) => handleLinkClick(sub, e)}
+                          target={sub.href?.startsWith('http') ? '_blank' : undefined}
+                          rel={sub.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
                           className="block px-4 py-2 text-xs text-gray-800 hover:text-pink-600 hover:bg-pink-50/40 font-bold transition-colors whitespace-nowrap text-center"
                         >
                           {sub.name}
@@ -183,11 +241,14 @@ export default function Navbar({ scrolled }: NavbarProps) {
                 <div key={link.name} className="space-y-1">
                   <div className="flex items-center justify-between">
                     <a
-                      href={link.href}
-                      className="text-sm font-semibold text-gray-700 hover:text-purple-600 py-1"
-                      onClick={() => {
+                      href={link.href || '#'}
+                      onClick={(e) => {
+                        handleLinkClick(link, e);
                         if (!link.dropdown) setMobileMenuOpen(false);
                       }}
+                      className={`text-sm font-semibold py-1 ${
+                        currentPage === link.page ? 'text-purple-600' : 'text-gray-700 hover:text-purple-600'
+                      }`}
                     >
                       {link.name}
                     </a>
@@ -206,11 +267,14 @@ export default function Navbar({ scrolled }: NavbarProps) {
                       {link.dropdown.map((sub) => (
                         <a
                           key={sub.name}
-                          href={sub.href}
-                          target={sub.href.startsWith('http') ? '_blank' : undefined}
-                          rel={sub.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                          href={sub.href || '#'}
+                          onClick={(e) => {
+                            handleLinkClick(sub, e);
+                            setMobileMenuOpen(false);
+                          }}
+                          target={sub.href?.startsWith('http') ? '_blank' : undefined}
+                          rel={sub.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
                           className="block text-xs font-medium text-gray-500 hover:text-purple-600 py-1"
-                          onClick={() => setMobileMenuOpen(false)}
                         >
                           {sub.name}
                         </a>
@@ -223,7 +287,10 @@ export default function Navbar({ scrolled }: NavbarProps) {
                 <a
                   href="#admissions"
                   className="block w-full px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full font-semibold text-center text-sm shadow-md"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    handleLinkClick({ page: 'home', scrollId: 'admissions' }, e);
+                    setMobileMenuOpen(false);
+                  }}
                 >
                   Apply Now
                 </a>
@@ -232,6 +299,7 @@ export default function Navbar({ scrolled }: NavbarProps) {
           </motion.div>
         )}
       </AnimatePresence>
+      <Ticker />
     </motion.nav>
   );
 }
