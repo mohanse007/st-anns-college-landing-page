@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Building2, Wifi, Mic, Book, Dumbbell, Microscope, Play } from 'lucide-react';
+import { Building2, Wifi, Home, Book, Dumbbell, Microscope, Play } from 'lucide-react';
 
 export default function Benefits() {
   const [playTour, setPlayTour] = useState(false);
@@ -16,9 +16,9 @@ export default function Benefits() {
       description: 'Campus-wide high-speed internet connectivity for seamless learning and collaboration.',
     },
     {
-      icon: Mic,
-      title: 'Auditorium & Open Stage',
-      description: 'Large capacity indoor auditorium and open stage for seminars, cultural festivals, and events.',
+      icon: Home,
+      title: 'Hostel Facility',
+      description: 'Safe, secure, and fully-furnished on-campus residential housing with healthy dining options.',
     },
     {
       icon: Book,
