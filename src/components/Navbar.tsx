@@ -51,8 +51,7 @@ export default function Navbar({ scrolled }: NavbarProps) {
       name: 'Login', 
       href: '#', 
       dropdown: [
-        { name: 'UG Student Login', href: 'https://saca.linways.com/' },
-        { name: 'PG Student Login', href: 'https://saca.linways.com/' },
+        { name: 'UG & PG Student Login', href: 'https://saca.linways.com/' },
         { name: 'Staff Login', href: 'https://saca.linways.com/' }
       ] 
     },
@@ -123,7 +122,7 @@ export default function Navbar({ scrolled }: NavbarProps) {
 
         {/* Row 2: Menu Bar (Desktop only) */}
         <div className="hidden lg:block border-t border-gray-150">
-          <div className="flex items-center justify-center gap-1 py-2 overflow-x-auto no-scrollbar">
+          <div className="flex items-center justify-center gap-1 py-2">
             {navLinks.map((link) => (
               <div
                 key={link.name}
@@ -133,7 +132,7 @@ export default function Navbar({ scrolled }: NavbarProps) {
               >
                 <motion.a
                   href={link.href}
-                  className="px-3 py-1.5 text-xs text-gray-700 hover:text-purple-600 font-semibold transition-colors rounded-lg hover:bg-purple-50/50 flex items-center gap-1 group whitespace-nowrap"
+                  className="px-3.5 py-1.5 text-xs text-gray-700 hover:text-purple-600 font-semibold transition-colors rounded-lg hover:bg-purple-50/50 flex items-center gap-1 group whitespace-nowrap"
                   whileHover={{ y: -1 }}
                 >
                   {link.name}
@@ -147,7 +146,7 @@ export default function Navbar({ scrolled }: NavbarProps) {
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="absolute top-full left-0 mt-1 w-52 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50"
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50"
                   >
                     {link.dropdown.map((sub) => (
                       <a
@@ -155,7 +154,7 @@ export default function Navbar({ scrolled }: NavbarProps) {
                         href={sub.href}
                         target={sub.href.startsWith('http') ? '_blank' : undefined}
                         rel={sub.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                        className="block px-4 py-2 text-xs text-gray-600 hover:text-purple-600 hover:bg-purple-50 font-medium transition-colors"
+                        className="block px-4 py-2 text-xs text-gray-600 hover:text-purple-600 hover:bg-purple-50 font-medium transition-colors whitespace-nowrap text-center"
                       >
                         {sub.name}
                       </a>
