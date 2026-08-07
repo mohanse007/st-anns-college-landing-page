@@ -9,80 +9,100 @@ interface NavbarProps {
 
 export default function Navbar({ scrolled }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [mobileDropdowns, setMobileDropdowns] = useState<Record<string, boolean>>({});
 
   const navLinks = [
-    { name: 'Programs', href: '#programs' },
-    { name: 'Features', href: '#features' },
-    { name: 'Testimonials', href: '#testimonials' },
-    { name: 'Admissions', href: '#admissions' },
-    { name: 'FAQ', href: '#faq' },
+    { name: 'Home', href: '#' },
+    { name: 'About Us', href: '#features' },
+    { 
+      name: 'Administration', 
+      href: '#', 
+      dropdown: [
+        { name: 'Governing Body', href: '#' },
+        { name: 'Principal Office', href: '#' },
+        { name: 'Administrative Staff', href: '#' }
+      ] 
+    },
+    { 
+      name: 'Academics', 
+      href: '#programs', 
+      dropdown: [
+        { name: 'Undergraduate (UG)', href: '#programs' },
+        { name: 'Postgraduate (PG)', href: '#programs' },
+        { name: 'Admissions 2026-27', href: '#admissions' }
+      ] 
+    },
+    { name: 'RTI', href: '#' },
+    { 
+      name: 'Committees', 
+      href: '#', 
+      dropdown: [
+        { name: 'Anti-Ragging Committee', href: '#' },
+        { name: 'Grievance Cell', href: '#' },
+        { name: 'IQAC Cell', href: '#' }
+      ] 
+    },
+    { name: 'NAAC', href: '#faq' },
+    { name: 'AICTE', href: '#' },
+    { name: 'IQAC', href: '#' },
+    { name: 'Contact Us', href: '#contact' },
+    { 
+      name: 'Login', 
+      href: '#', 
+      dropdown: [
+        { name: 'Student Portal', href: '#' },
+        { name: 'Faculty Portal', href: '#' },
+        { name: 'Alumni Portal', href: '#' }
+      ] 
+    },
   ];
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-white/95 backdrop-blur-xl ${
         scrolled
-          ? 'bg-white/80 backdrop-blur-xl shadow-lg shadow-purple-100/50'
-          : 'bg-transparent'
+          ? 'shadow-lg shadow-purple-100/50'
+          : 'border-b border-gray-100'
       }`}
     >
       <div className="max-w-none px-6 sm:px-12 lg:px-20 xl:px-32">
-        <div className="flex justify-between items-center h-20">
+        {/* Row 1: Logo & Brand + Top Right buttons */}
+        <div className={`flex justify-between items-center transition-all duration-300 ${scrolled ? 'h-14' : 'h-16'}`}>
           {/* Logo */}
           <motion.a
             href="#"
             className="flex items-center gap-3 group"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
           >
             <div className="relative flex-shrink-0">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full blur-lg opacity-40 group-hover:opacity-60 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full blur-md opacity-35 group-hover:opacity-55 transition-opacity" />
               <img
                 src={logo}
                 alt="St. Ann's College Logo"
-                className="relative w-12 h-12 object-contain rounded-full bg-white border border-purple-200 shadow-md"
+                className="relative w-10 h-10 object-contain rounded-full bg-white border border-purple-200"
               />
             </div>
-            <div className="hidden sm:block">
-              <div className="font-bold text-base bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent leading-tight whitespace-nowrap">
+            <div className="block">
+              <div className="font-bold text-sm sm:text-base bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent leading-tight whitespace-nowrap">
                 St.Ann's College for Women
               </div>
-              <div className="text-[10px] tracking-widest text-purple-700 font-bold uppercase -mt-0.5">
+              <div className="text-[9px] tracking-widest text-purple-700 font-bold uppercase -mt-0.5">
                 Autonomous
               </div>
             </div>
           </motion.a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <motion.a
-                key={link.name}
-                href={link.href}
-                className="text-gray-700 hover:text-purple-600 font-medium transition-colors relative group"
-                whileHover={{ y: -2 }}
-              >
-                {link.name}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-600 to-pink-600 group-hover:w-full transition-all duration-300" />
-              </motion.a>
-            ))}
-          </div>
-
-          {/* CTA Buttons */}
+          {/* Top Right Quick Actions (Desktop only) */}
           <div className="hidden lg:flex items-center gap-4">
-            <motion.a
-              href="#contact"
-              className="px-6 py-2.5 text-gray-700 font-medium hover:text-purple-600 transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Contact
-            </motion.a>
+            <span className="text-xs text-gray-500 font-medium">📞 +91 8978098870</span>
+            <span className="text-gray-300">|</span>
             <motion.a
               href="#admissions"
-              className="relative px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full font-medium shadow-lg shadow-purple-300/50 hover:shadow-xl hover:shadow-purple-400/50 transition-all overflow-hidden group"
+              className="relative px-5 py-1.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full text-xs font-semibold shadow-md hover:shadow-lg transition-all overflow-hidden group"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -100,6 +120,50 @@ export default function Navbar({ scrolled }: NavbarProps) {
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </motion.button>
         </div>
+
+        {/* Row 2: Menu Bar (Desktop only) */}
+        <div className="hidden lg:block border-t border-gray-100">
+          <div className="flex items-center justify-start gap-1 py-2 overflow-x-auto no-scrollbar">
+            {navLinks.map((link) => (
+              <div
+                key={link.name}
+                className="relative"
+                onMouseEnter={() => link.dropdown && setActiveDropdown(link.name)}
+                onMouseLeave={() => setActiveDropdown(null)}
+              >
+                <motion.a
+                  href={link.href}
+                  className="px-3 py-1.5 text-xs text-gray-700 hover:text-purple-600 font-semibold transition-colors rounded-lg hover:bg-purple-50/50 flex items-center gap-1 group whitespace-nowrap"
+                  whileHover={{ y: -1 }}
+                >
+                  {link.name}
+                  {link.dropdown && (
+                    <span className="text-[9px] text-gray-400 group-hover:text-purple-500 transition-colors">▼</span>
+                  )}
+                </motion.a>
+
+                {/* Dropdown Menu */}
+                {link.dropdown && activeDropdown === link.name && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="absolute top-full left-0 mt-1 w-52 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50"
+                  >
+                    {link.dropdown.map((sub) => (
+                      <a
+                        key={sub.name}
+                        href={sub.href}
+                        className="block px-4 py-2 text-xs text-gray-600 hover:text-purple-600 hover:bg-purple-50 font-medium transition-colors"
+                      >
+                        {sub.name}
+                      </a>
+                    ))}
+                  </motion.div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -109,32 +173,56 @@ export default function Navbar({ scrolled }: NavbarProps) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white/95 backdrop-blur-xl border-t border-gray-200"
+            className="lg:hidden bg-white border-t border-gray-100 overflow-y-auto max-h-[80vh]"
           >
-            <div className="max-w-none px-6 py-6 space-y-4">
-              {navLinks.map((link, index) => (
-                <motion.a
-                  key={link.name}
-                  href={link.href}
-                  className="block py-2 text-gray-700 hover:text-purple-600 font-medium transition-colors"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
+            <div className="max-w-none px-6 py-6 space-y-3">
+              {navLinks.map((link) => (
+                <div key={link.name} className="space-y-1">
+                  <div className="flex items-center justify-between">
+                    <a
+                      href={link.href}
+                      className="text-sm font-semibold text-gray-700 hover:text-purple-600 py-1"
+                      onClick={() => {
+                        if (!link.dropdown) setMobileMenuOpen(false);
+                      }}
+                    >
+                      {link.name}
+                    </a>
+                    {link.dropdown && (
+                      <button
+                        onClick={() => setMobileDropdowns(prev => ({ ...prev, [link.name]: !prev[link.name] }))}
+                        className="p-1 text-gray-400 hover:text-purple-600"
+                      >
+                        <span className="text-xs">{mobileDropdowns[link.name] ? '▲' : '▼'}</span>
+                      </button>
+                    )}
+                  </div>
+                  
+                  {link.dropdown && mobileDropdowns[link.name] && (
+                    <div className="pl-4 border-l-2 border-purple-100 py-1 space-y-2">
+                      {link.dropdown.map((sub) => (
+                        <a
+                          key={sub.name}
+                          href={sub.href}
+                          className="block text-xs font-medium text-gray-500 hover:text-purple-600 py-1"
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {sub.name}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+              <div className="pt-4 border-t border-gray-100">
+                <a
+                  href="#admissions"
+                  className="block w-full px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full font-semibold text-center text-sm shadow-md"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  {link.name}
-                </motion.a>
-              ))}
-              <motion.a
-                href="#admissions"
-                className="block w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full font-medium text-center shadow-lg"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: navLinks.length * 0.1 }}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Apply Now
-              </motion.a>
+                  Apply Now
+                </a>
+              </div>
             </div>
           </motion.div>
         )}
