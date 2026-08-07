@@ -51,9 +51,9 @@ export default function Navbar({ scrolled }: NavbarProps) {
       name: 'Login', 
       href: '#', 
       dropdown: [
-        { name: 'Student Portal', href: '#' },
-        { name: 'Faculty Portal', href: '#' },
-        { name: 'Alumni Portal', href: '#' }
+        { name: 'UG Student Login', href: 'https://saca.linways.com/' },
+        { name: 'PG Student Login', href: 'https://saca.linways.com/' },
+        { name: 'Staff Login', href: 'https://saca.linways.com/' }
       ] 
     },
   ];
@@ -153,6 +153,8 @@ export default function Navbar({ scrolled }: NavbarProps) {
                       <a
                         key={sub.name}
                         href={sub.href}
+                        target={sub.href.startsWith('http') ? '_blank' : undefined}
+                        rel={sub.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                         className="block px-4 py-2 text-xs text-gray-600 hover:text-purple-600 hover:bg-purple-50 font-medium transition-colors"
                       >
                         {sub.name}
@@ -204,6 +206,8 @@ export default function Navbar({ scrolled }: NavbarProps) {
                         <a
                           key={sub.name}
                           href={sub.href}
+                          target={sub.href.startsWith('http') ? '_blank' : undefined}
+                          rel={sub.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                           className="block text-xs font-medium text-gray-500 hover:text-purple-600 py-1"
                           onClick={() => setMobileMenuOpen(false)}
                         >
