@@ -10,7 +10,22 @@ export default function SocialProof() {
   ];
 
   const logos = [
-    'Google', 'Microsoft', 'Amazon', 'Deloitte', 'TCS', 'Infosys'
+    'Miracle',
+    'Tekwissen Software Solutions',
+    'AMTZ',
+    'Infosys',
+    'Concentrix',
+    'Tech Mahindra',
+    'Coromandel',
+    'HPCL',
+    'Bharat Bank',
+    'Unlox IT Solutions',
+    'Wipro',
+    'Placement Park',
+    'Vivam Software Solutions',
+    'WNS',
+    'HDFC Bank',
+    'Bajaj Finserv Limited'
   ];
 
   return (
@@ -52,19 +67,19 @@ export default function SocialProof() {
             Our Students Are Placed At
           </motion.p>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 items-center">
             {logos.map((logo, index) => (
               <motion.div
                 key={logo}
-                className="flex items-center justify-center"
+                className="flex items-center justify-center h-full"
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.5, delay: (index % 6) * 0.05 }}
+                whileHover={{ scale: 1.05 }}
               >
-                <div className="px-6 py-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border border-gray-200 hover:border-purple-300 transition-all">
-                  <div className="text-lg font-bold text-gray-700">{logo}</div>
+                <div className="w-full h-full min-h-[80px] flex items-center justify-center px-4 py-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl border border-gray-200 hover:border-purple-300 hover:shadow-md transition-all duration-300">
+                  <div className="text-xs sm:text-sm font-extrabold text-gray-700 text-center leading-snug">{logo}</div>
                 </div>
               </motion.div>
             ))}
