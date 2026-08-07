@@ -62,15 +62,15 @@ export default function Navbar({ scrolled }: NavbarProps) {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-white/95 backdrop-blur-xl ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? 'shadow-lg shadow-purple-100/50'
-          : 'border-b border-gray-100'
+          ? 'bg-white/85 backdrop-blur-xl shadow-lg shadow-purple-100/50'
+          : 'bg-transparent'
       }`}
     >
       <div className="max-w-none px-6 sm:px-12 lg:px-20 xl:px-32">
         {/* Row 1: Logo & Brand + Top Right buttons */}
-        <div className={`flex justify-between items-center transition-all duration-300 ${scrolled ? 'h-14' : 'h-16'}`}>
+        <div className={`flex justify-between items-center transition-all duration-300 ${scrolled ? 'h-16' : 'h-20'}`}>
           {/* Logo */}
           <motion.a
             href="#"
@@ -83,14 +83,14 @@ export default function Navbar({ scrolled }: NavbarProps) {
               <img
                 src={logo}
                 alt="St. Ann's College Logo"
-                className="relative w-10 h-10 object-contain rounded-full bg-white border border-purple-200"
+                className="relative w-14 h-14 object-contain rounded-full bg-white border border-purple-200 shadow-md"
               />
             </div>
             <div className="block">
-              <div className="font-bold text-sm sm:text-base bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent leading-tight whitespace-nowrap">
+              <div className="font-extrabold text-base sm:text-lg md:text-xl bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent leading-tight whitespace-nowrap">
                 St.Ann's College for Women
               </div>
-              <div className="text-[9px] tracking-widest text-purple-700 font-bold uppercase -mt-0.5">
+              <div className="text-[10px] md:text-[11px] tracking-widest text-purple-700 font-extrabold uppercase mt-0.5">
                 Autonomous
               </div>
             </div>
@@ -122,8 +122,8 @@ export default function Navbar({ scrolled }: NavbarProps) {
         </div>
 
         {/* Row 2: Menu Bar (Desktop only) */}
-        <div className="hidden lg:block border-t border-gray-100">
-          <div className="flex items-center justify-start gap-1 py-2 overflow-x-auto no-scrollbar">
+        <div className="hidden lg:block border-t border-gray-150">
+          <div className="flex items-center justify-center gap-1 py-2 overflow-x-auto no-scrollbar">
             {navLinks.map((link) => (
               <div
                 key={link.name}
