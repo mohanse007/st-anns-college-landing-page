@@ -146,7 +146,7 @@ export default function Navbar({ scrolled }: NavbarProps) {
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 w-56 bg-white/30 backdrop-blur-2xl rounded-2xl shadow-xl shadow-purple-950/5 border border-white/40 py-2 z-50 overflow-hidden"
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 w-56 bg-white/15 backdrop-blur-3xl rounded-2xl shadow-xl shadow-purple-950/5 border border-white/30 py-2 z-50 overflow-hidden"
                   >
                     {link.dropdown.map((sub) => (
                       <a
@@ -154,7 +154,7 @@ export default function Navbar({ scrolled }: NavbarProps) {
                         href={sub.href}
                         target={sub.href.startsWith('http') ? '_blank' : undefined}
                         rel={sub.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                        className="block px-4 py-2 text-xs text-gray-800 hover:text-purple-700 hover:bg-white/40 font-bold transition-colors whitespace-nowrap text-center"
+                        className="block px-4 py-2 text-xs text-gray-800 hover:text-purple-700 hover:bg-white/20 font-bold transition-colors whitespace-nowrap text-center"
                       >
                         {sub.name}
                       </a>
